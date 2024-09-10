@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="AccountantApp.WorkerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AccountantApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ScrollViewer Margin="30">
+            <DockPanel Background="{DynamicResource lightBackground}" MinWidth="740" MinHeight="390" Visibility="Visible">
+            <DockPanel DockPanel.Dock="Left" Width="300">
+                <StackPanel Orientation="Vertical" Margin="10, 10, 10, 0" DockPanel.Dock="Top">
+                    <TextBlock Text="Паспортные данные" FontSize="18" FontWeight="Bold"/>
+                    <DockPanel Margin="0, 2, 0, 0">
+                        <TextBlock Text="Фамилия" FontSize="16" Width="200" DockPanel.Dock="Left"/>
+                        <TextBlock Text="XXX" Name="givenName" FontSize="16" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                    <DockPanel Margin="0, 2, 0, 0">
+                        <TextBlock Text="Имя" FontSize="16" Width="200" DockPanel.Dock="Left"/>
+                        <TextBlock Text="XXX" Name="surname" FontSize="16" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                    <DockPanel Margin="0, 2, 0, 0">
+                        <TextBlock Text="Отчество" FontSize="16" Width="200"/>
+                        <TextBlock Text="XXX" Name="additionalName" FontSize="16" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                    <DockPanel Margin="0, 2, 0, 0">
+                        <TextBlock Text="Номер паспорта" FontSize="16" Width="200"/>
+                        <TextBlock Text="XXX" Name="numberPassport" FontSize="16" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                    <DockPanel Margin="0, 2, 0, 0">
+                        <TextBlock Text="Идентификатор паспорта" FontSize="16" Width="200"/>
+                        <TextBlock Text="XXX" Name="idPassport" FontSize="16" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                    <TextBlock FontSize="18" FontWeight="Bold" Margin="0, 40, 0, 0"><Run Language="ru-ru" Text="Персональные данные"/></TextBlock>
+                    <DockPanel Margin="0, 2, 0, 0">
+                        <TextBlock Text="e-mail" FontSize="16" Width="100"/>
+                        <TextBlock Text="mymail@gmail.com" Name="mail" FontSize="16" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                    <DockPanel Margin="0, 2, 0, 0">
+                        <TextBlock Text="телефон" FontSize="16" Width="100"/>
+                        <TextBlock Text="+375-00-000-00-00" Name="telephone" FontSize="16" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                    <DockPanel Margin="0, 2, 0, 0">
+                        <TextBlock Text="адрес" FontSize="16" Width="100"/>
+                        <TextBlock Text="xxxxxxxxx" Name="address" FontSize="16" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                </StackPanel>
+                <DockPanel DockPanel.Dock="Bottom" Margin="10, 0, 0, 10">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="30" Margin="0, 2, 0, 2" DockPanel.Dock="Bottom">
+                        <TextBlock Text="День отправки" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Style="{DynamicResource lineTextBox}" Width="80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10, 0, 0, 0"/>
+                        <TextBlock Text="$" FontSize="16" VerticalAlignment="Center" Margin="5, 0, 0, 0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="30" Margin="0, 2, 0, 2" DockPanel.Dock="Bottom">
+                        <TextBlock Text="Зарплата" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Name="salaryBox" Style="{DynamicResource lineTextBox}" Width="80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10, 0, 0, 0" TextChanged="salaryBox_TextChanged" IsKeyboardFocusedChanged="salaryBox_Focused"/>
+                        <TextBlock Text="$" FontSize="16" VerticalAlignment="Center" Margin="5, 0, 0, 0"/>
+                    </StackPanel>
+                </DockPanel>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Right">
+                <DockPanel Height="100" DockPanel.Dock="Bottom">
+                        <Button Name="fireButton"  Content="Fire" Style="{DynamicResource defaultLightButton}" Margin="0, 0, 10, 10" DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Height="40" FontSize="18" Click="fireButton_Click"/>
+                        <Button Content="Send Message" Style="{DynamicResource defaultLightButton}" Margin="0, 0, 10, 10" DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="180" Height="40" FontSize="18"/>
+                </DockPanel>
+                    <Border BorderBrush="{DynamicResource darkBackground}" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 20, 20, 0" DockPanel.Dock="Right">
+                    <Image Source="D:/Progects/C#/AccountantApp/AccountantApp/worker1.jpg" Width="220" Height="220"/>
+                </Border>
+                    <Border Visibility="Hidden" Style="{DynamicResource lineBorder}" VerticalAlignment="Top" Margin="10, 20, 20, 10" Height="220" DockPanel.Dock="Left">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                            <Border Style="{DynamicResource lineBorder}" Grid.Column="0"/>
+                        <GridSplitter Width="2" HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="1"/>
+                            <Border Style="{DynamicResource lineBorder}" Grid.Column="2"/>
+                    </Grid>
+                </Border>
+            </DockPanel>
+        </DockPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

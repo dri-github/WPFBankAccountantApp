@@ -1,0 +1,245 @@
+﻿<Application x:Class="AccountantApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AccountantApp"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             StartupUri="Windows/LoginWindow.xaml">
+    <Application.Resources>
+        <local:Invoice x:Key="RootInvoice" Id="00001" Currency="USD" Value="52364">
+            
+        </local:Invoice>
+
+        <!--Base colors-->
+        <SolidColorBrush Color="#FF04202C" x:Key="darkBackground" />
+        <SolidColorBrush Color="#FF304040" x:Key="beforeDarkBackground" />
+        <SolidColorBrush Color="#FF5B7065" x:Key="beforeLightBackground" />
+        <SolidColorBrush Color="#FF415249" x:Key="overBeforeLightBackground" />
+        <SolidColorBrush Color="#FFC9D1C8" x:Key="lightBackground" />
+        <SolidColorBrush Color="#FFABB9A9" x:Key="overLightBackground" />
+
+        <SolidColorBrush Color="#FF04202C" x:Key="darkTextColor"/>
+        <SolidColorBrush Color="#FFC9D1C8" x:Key="lightTextColor"/>
+
+        <system:String x:Key="changesListTime">Time</system:String>
+        <system:String x:Key="changesListEvent">Event</system:String>
+        <system:String x:Key="changesListStatus">Status</system:String>
+        <system:String x:Key="changesListDescription">Description</system:String>
+
+        <!--Thickness x:Key="loginTextBoxesWidth"/-->
+
+        <Style x:Key="coverPanel">
+            <Setter Property="Control.Background" Value="{DynamicResource darkBackground}"/>
+        </Style>
+        <Style x:Key="substratePanel">
+            <Setter Property="Control.Background" Value="{DynamicResource beforeDarkBackground}"/>
+        </Style>
+        <Style x:Key="sheetPanel">
+            <Setter Property="Control.Background" Value="{DynamicResource beforeLightBackground}"/>
+        </Style>
+            
+        <Style x:Key="defaultText">
+            <Setter Property="Control.FontFamily" Value="Arial"/>
+            <Setter Property="Control.FontSize" Value="16"/>
+            <Setter Property="Control.Foreground" Value="{DynamicResource lightTextColor}"/>
+        </Style>
+        <Style x:Key="defaultTextBox">
+            <Setter Property="Control.Background" Value="{DynamicResource lightTextColor}"/>
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Background="{TemplateBinding Background}"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="0"
+                                CornerRadius="10"
+                                Padding="5,5,5,5"
+                                SnapsToDevicePixels="True">
+                            <ScrollViewer Height="{TemplateBinding Height}"
+                                          VerticalAlignment="Center"
+                                          x:Name="PART_ContentHost"
+                                          Focusable="false"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="Control.IsMouseOver" Value="True"/>
+                        <Condition Property="Control.Name" Value="passwordBox"/>
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="Control.Background" Value="{DynamicResource overLightBackground}"/>
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+                <DataTrigger Value="Help" Binding="{Binding ElementName=searchTextBox, Path=Text}">
+                    <Setter Property="Control.Background" Value="Red" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="lineBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="{DynamicResource darkBackground}"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style x:Key="lineTextBox">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Style="{DynamicResource lineBorder}">
+                            <ScrollViewer Height="{TemplateBinding Height}"
+                                          VerticalAlignment="Center"
+                                          x:Name="PART_ContentHost"
+                                          Focusable="false"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="defaultButtonTemplate" TargetType="Button">
+            <Border x:Name="border"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="0,0,0,4"
+            Padding="10,5,10,5"
+            CornerRadius="10">
+                <ContentControl Content="{TemplateBinding Content}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Foreground="{DynamicResource lightTextColor}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Opacity" TargetName="border" Value="0.8"/>
+                </Trigger>
+                <Trigger Property="IsMouseCaptured" Value="true">
+                    <Setter Property="Control.Background" TargetName="border" Value="{DynamicResource darkBackground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="defaultDarkButton" TargetType="Button">
+            <Setter Property="Control.Background" Value="{DynamicResource beforeDarkBackground}"/>
+            <Setter Property="Control.BorderBrush" Value="{DynamicResource darkBackground}"/>
+            <Setter Property="Control.BorderThickness" Value="2"/>
+            <Setter Property="Control.FontFamily" Value="Arial"/>
+            <Setter Property="Control.FontSize" Value="18"/>
+            <Setter Property="Control.Template" Value="{DynamicResource defaultButtonTemplate}"/>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Click">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="FontSize" Duration="0:0:1" To="22" AutoReverse="True" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="defaultLightButton" TargetType="Button">
+            <Setter Property="Control.Background" Value="{DynamicResource beforeLightBackground}"/>
+            <Setter Property="Control.BorderBrush" Value="{DynamicResource beforeDarkBackground}"/>
+            <Setter Property="Control.BorderThickness" Value="2"/>
+            <Setter Property="Control.FontFamily" Value="Arial"/>
+            <Setter Property="Control.FontSize" Value="18"/>
+            <Setter Property="Control.Template" Value="{DynamicResource defaultButtonTemplate}"/>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="Control.IsMouseOver" Value="True"/>
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="Control.Background" Value="{DynamicResource overBeforeLightBackground}"/>
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="defaultComboBox">
+            <Setter Property="Control.Background" Value="{DynamicResource beforeLightBackground}"/>
+        </Style>
+        <Style x:Key="invoicesTreeView" TargetType="TreeView">
+            <Setter Property="Control.Background" Value="{DynamicResource lightBackground}"/>
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Background="{DynamicResource lightBackground}" 
+                                CornerRadius="10"
+                                BorderThickness="0" 
+                                SnapsToDevicePixels="true">
+                            <ScrollViewer CanContentScroll="false"
+                                          Margin="10, 0"
+                                          Focusable="false"
+                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                          Padding="{TemplateBinding Padding}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="item" TargetType="TreeViewItem">
+            <TreeViewItem>
+                <TreeViewItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/72.ico" Height="30"></Image>
+                        <TextBlock Text="4664"></TextBlock>
+                    </StackPanel>
+                </TreeViewItem.Header>
+            </TreeViewItem>
+        </ControlTemplate>
+
+        <PathGeometry x:Key="TreeArrow" Figures="M0,0 L0,6 L6,0 z"/>
+        <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Background="Transparent" Height="16" Padding="5,5,5,5" Width="16">
+                            <Path x:Name="ExpandPath" Data="{StaticResource TreeArrow}">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="135" CenterX="3" CenterY="3"/>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="testItem" TargetType="TreeViewItem">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="19" Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ToggleButton x:Name="Expander" ClickMode="Press" IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource Mode=TemplatedParent}}" Style="{DynamicResource ExpandCollapseToggleStyle}"/>
+                <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Grid.Column="1" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                    <ContentPresenter x:Name="PART_Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/72.ico" Width="32"/>
+                                <TextBlock Text="{TemplateBinding Header}"/>
+                            </StackPanel>
+                        </ContentPresenter.Content>
+                    </ContentPresenter>
+                </Border>
+                <ItemsPresenter x:Name="ItemsHost" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+            </Grid>
+        </ControlTemplate>
+    </Application.Resources>
+</Application>

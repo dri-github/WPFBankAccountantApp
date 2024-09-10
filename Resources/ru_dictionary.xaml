@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="bigLogo">Мой большой логотип</system:String>
+
+    <system:String x:Key="logoutButton">Выйти</system:String>
+    <system:String x:Key="searchButton">Поиск</system:String>
+
+    <system:String x:Key="fileMenuItem">Файл</system:String>
+    <system:String x:Key="exportMenuItem">Экспорт</system:String>
+    <system:String x:Key="exitMenuItem">Закрыть</system:String>
+    <system:String x:Key="editMenuItem">Редактировать</system:String>
+    <system:String x:Key="cutMenuItem">Вырезать</system:String>
+    <system:String x:Key="copyMenuItem">Копировать</system:String>
+    <system:String x:Key="pasteMenuItem">Вставить</system:String>
+    <system:String x:Key="deleteMenuItem">Удалить</system:String>
+    <system:String x:Key="commandsMenuItem">Команды</system:String>
+    <system:String x:Key="inviteMenuItem">Пригласить</system:String>
+    <system:String x:Key="languageMenuItem">Язык</system:String>
+    <system:String x:Key="aboutMenuItem">О программе</system:String>
+    
+    <system:String x:Key="sortingText">Сортировать</system:String>
+    <system:String x:Key="byText">по</system:String>
+
+    <system:String x:Key="changesListTime">Время</system:String>
+    <system:String x:Key="changesListEvent">Действие</system:String>
+    <system:String x:Key="changesListStatus">Статус</system:String>
+    <system:String x:Key="changesListDescription">Описание</system:String>
+
+    <SolidColorBrush Color="#FF12042C" x:Key="darkBackground" />
+    <SolidColorBrush Color="#FF353040" x:Key="beforeDarkBackground" />
+    <SolidColorBrush Color="#FF5F5B70" x:Key="beforeLightBackground" />
+    <SolidColorBrush Color="#FF454152" x:Key="overBeforeLightBackground" />
+    <SolidColorBrush Color="#FFCBC8D1" x:Key="lightBackground" />
+    <SolidColorBrush Color="#FFACA9B9" x:Key="overLightBackground" />
+
+    <SolidColorBrush Color="#FF0D042C" x:Key="darkTextColor"/>
+    <SolidColorBrush Color="#FFCAC8D1" x:Key="lightTextColor"/>
+</ResourceDictionary>

@@ -1,0 +1,233 @@
+﻿<Window x:Class="AccountantApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AccountantApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280" MinHeight="600" MinWidth="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/eng_dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="Undo" Executed="CommandUndo_Executed" />
+        <CommandBinding Command="Redo" Executed="CommandRedo_Executed" />
+    </Window.CommandBindings>
+    <Grid Margin="0,18,0,0">
+        <Menu Margin="0,-18,0,0" VerticalAlignment="Top" Height="17">
+            <MenuItem Header="{DynamicResource fileMenuItem}">
+                <MenuItem Header="{DynamicResource exportMenuItem}" Click="ExportMenuItem_Click"/>
+                <MenuItem Header="{DynamicResource exitMenuItem}" Click="ExitMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource editMenuItem}">
+                <MenuItem Header="Undo" Command="Undo"/>
+                <MenuItem Header="Redo" Command="Redo"/>
+                <MenuItem Header="{DynamicResource cutMenuItem}" Command="Cut"/>
+                <MenuItem Header="{DynamicResource copyMenuItem}" Command="Copy"/>
+                <MenuItem Header="{DynamicResource pasteMenuItem}" Command="Paste"/>
+                <MenuItem Header="{DynamicResource deleteMenuItem}" Command="Delete"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource commandsMenuItem}">
+                <MenuItem Header="{DynamicResource inviteMenuItem}" Click="InviteWorkerMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource languageMenuItem}">
+                <MenuItem Header="ru" Click="ruLanguageMenuItem_Click"/>
+                <MenuItem Header="eng" Click="ruLanguageMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource aboutMenuItem}" Name="aboutMenuItem" Command="Help"/>
+        </Menu>
+        <DockPanel Style="{DynamicResource coverPanel}" Height="100" LastChildFill="False" VerticalAlignment="Top">
+            <Button Name="logoutButton" Style="{DynamicResource defaultLightButton}" Width="100" Content="{DynamicResource logoutButton}" DockPanel.Dock="Right" Margin="0,20,20,20" Click="logoutButton_Click"/>
+            <StackPanel Orientation="Vertical" Margin="0, 0, 10, 0" VerticalAlignment="Center" DockPanel.Dock="Right">
+                <TextBlock Name="currentNameBox" Text="Worker" FontSize="14" Foreground="{DynamicResource lightTextColor}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBlock Name="currentIDBox" Text="000000000000" FontSize="14" Foreground="{DynamicResource lightTextColor}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </StackPanel>
+            <Label Style="{DynamicResource defaultText}" Content="{DynamicResource bigLogo}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,20,0,20" FontSize="36"/>
+        </DockPanel>
+        <Grid Margin="0,100,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <ImageBrush ImageSource="/Resources/background.png" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <DockPanel Style="{DynamicResource substratePanel}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
+                <DockPanel Margin="10,10,10,10" Background="{DynamicResource beforeLightBackground}">
+                    <DockPanel DockPanel.Dock="Top" Height="30" Margin="10,10,10,0">
+                        <Button Name="searchButton" Style="{DynamicResource defaultDarkButton}" Content="{DynamicResource searchButton}" Width="100" Margin="0,0,0,0" FontSize="14" Click="searchButton_Click" DockPanel.Dock="Right"/>
+                        <TextBox Name="searchTextBox" Style="{DynamicResource defaultTextBox}" TextWrapping="Wrap" Text="Searched Text..." Margin="0,0,10,0" FontSize="14"/>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Height="36" Margin="10,10,10,0">
+                        <Label Content="{DynamicResource sortingText}" FontSize="18">
+                            <Label.Style>
+                                <Style TargetType="Label">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=sortedByBox, Path=sortedByBox.SelectedIndex}" Value="True">
+                                            <Setter Property="Control.Background" Value="Red"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <ComboBox Name="typeSortedBox" SelectedIndex="0" FontSize="18" MinWidth="100" SelectionChanged="typeSortedBox_SelectionChanged" Foreground="{DynamicResource darkTextColor}">
+                            <ComboBoxItem Content="All"/>
+                            <ComboBoxItem Content="Invoices"/>
+                            <ComboBoxItem Content="Workers"/>
+                        </ComboBox>
+                        <Label Content="{DynamicResource byText}" FontSize="18"/>
+                        <ComboBox Name="sortedByBox" SelectedIndex="0" FontSize="18" SelectionChanged="sortedByBox_SelectionChanged">
+                            <ComboBoxItem Content="None"/>
+                        </ComboBox>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Margin="10,10,10,10">
+                        <TreeView Name="invoicesTree" Style="{DynamicResource invoicesTreeView}" DockPanel.Dock="Top" SelectedItemChanged="invoicesTree_SelectedItemChanged">
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Childrens}" DataType="local:TreeViewItemNode">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding ImageSource}" Width="32"/>
+                                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </DockPanel>
+                </DockPanel>
+            </DockPanel>
+            <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Width="10" Background="{DynamicResource darkBackground}" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+            <DockPanel Background="{DynamicResource beforeDarkBackground}" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2">
+                <Border Background="{DynamicResource lightBackground}" CornerRadius="10, 10, 0, 0" Margin="20, 20, 20, 0">
+                    <DockPanel>
+                        <DataGrid Name="changesGrid" Background="{x:Null}" BorderBrush="{x:Null}" Margin="10, 10, 10, 0" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.RowHeaderStyle>
+                                <Style TargetType="DataGridRowHeader">
+                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="BorderBrush" Value="Green"/>
+                                </Style>
+                            </DataGrid.RowHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Time" Binding="{Binding Path=dateTime}" Width="140">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="{DynamicResource lightBackground}"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="0, 0, 1, 1"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="Background" Value="{DynamicResource lightBackground}"/>
+                                            <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Margin" Value="-1, 0, 0, 0"/>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Event" Binding="{Binding Path=name}" Width="*">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="{DynamicResource lightBackground}"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="0, 0, 1, 1"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="Background" Value="{DynamicResource lightBackground}"/>
+                                            <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Status" Binding="{Binding Path=status}" Width="*">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="{DynamicResource lightBackground}"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="0, 0, 1, 1"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="Background" Value="{DynamicResource lightBackground}"/>
+                                            <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Path=description}" Width="*">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="{DynamicResource lightBackground}"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="Background" Value="{DynamicResource lightBackground}"/>
+                                            <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Margin" Value="0, 0, -1, 0"/>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+            </DockPanel>
+            <GridSplitter Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Height="10" Background="{DynamicResource darkBackground}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <DockPanel Name="info" Visibility="Visible" Grid.Column="2" Grid.Row="0">
+                <local:InvoicePage Invoice="{StaticResource RootInvoice}"/>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>

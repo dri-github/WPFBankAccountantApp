@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="bigLogo">My Big Logo</system:String>
+
+    <system:String x:Key="logoutButton">Logout</system:String>
+    <system:String x:Key="searchButton">Search</system:String>
+
+    <system:String x:Key="fileMenuItem">File</system:String>
+    <system:String x:Key="exportMenuItem">Export</system:String>
+    <system:String x:Key="exitMenuItem">Exit</system:String>
+    <system:String x:Key="editMenuItem">Edit</system:String>
+    <system:String x:Key="cutMenuItem">Cut</system:String>
+    <system:String x:Key="copyMenuItem">Copy</system:String>
+    <system:String x:Key="pasteMenuItem">Paste</system:String>
+    <system:String x:Key="deleteMenuItem">Delete</system:String>
+    <system:String x:Key="commandsMenuItem">Command</system:String>
+    <system:String x:Key="inviteMenuItem">Invite</system:String>
+    <system:String x:Key="languageMenuItem">Language</system:String>
+    <system:String x:Key="aboutMenuItem">About</system:String>
+
+    <system:String x:Key="sortingText">Sorting</system:String>
+    <system:String x:Key="byText">by</system:String>
+
+    <system:String x:Key="changesListTime">Time</system:String>
+    <system:String x:Key="changesListEvent">Event</system:String>
+    <system:String x:Key="changesListStatus">Status</system:String>
+    <system:String x:Key="changesListDescription">Description</system:String>
+
+    <SolidColorBrush Color="#FF04202C" x:Key="darkBackground" />
+    <SolidColorBrush Color="#FF304040" x:Key="beforeDarkBackground" />
+    <SolidColorBrush Color="#FF5B7065" x:Key="beforeLightBackground" />
+    <SolidColorBrush Color="#FF415249" x:Key="overBeforeLightBackground" />
+    <SolidColorBrush Color="#FFC9D1C8" x:Key="lightBackground" />
+    <SolidColorBrush Color="#FFABB9A9" x:Key="overLightBackground" />
+
+    <SolidColorBrush Color="#FF04202C" x:Key="darkTextColor"/>
+    <SolidColorBrush Color="#FFC9D1C8" x:Key="lightTextColor"/>
+</ResourceDictionary>
